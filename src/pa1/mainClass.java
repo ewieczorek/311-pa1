@@ -17,6 +17,8 @@ public class mainClass {
 		System.out.println(string1);
 		System.out.println(string2);
 		
+		System.out.println("hallo");
+		
 		BruteForceSimilarity newBrute = new BruteForceSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
 		System.out.println(newBrute.lengthOfS1());
 		System.out.println(newBrute.lengthOfS2());
