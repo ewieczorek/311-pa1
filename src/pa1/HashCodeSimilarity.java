@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class HashCodeSimilarity {
 	String s1, s2;
 	int sLength;
-	ArrayList<Tuple> UnionList;
+	ArrayList<Integer> UnionList;
 	HashTable S, T, UnionTable;
 	
 	HashCodeSimilarity(String s1, String s2, int sLength){
@@ -24,9 +24,9 @@ public class HashCodeSimilarity {
 	}
 	
 	public float lengthOfS1(){
-	/*	float tempTotal = 0;
+		float tempTotal = 0;
 		float toReturn = 0;
-		for(Tuple sub1: UnionList){
+		for(String sub1: UnionList){
 			float tempToSquare = 0;
 			for(Tuple sub2: S){
 				if(sub1.equals(sub2)){
@@ -36,8 +36,7 @@ public class HashCodeSimilarity {
 			tempTotal += (float) tempToSquare * tempToSquare;
 		}
 		toReturn = (float) Math.sqrt(tempTotal);
-		return toReturn;*/
-		return 0;
+		return toReturn;
 	}
 	
 	public float lengthOfS2(){
@@ -70,6 +69,9 @@ public class HashCodeSimilarity {
 			Tuple addToS = new Tuple(hash, temp);
 			System.out.println("Hash: " + hash + ", String: " + temp);
 			S.add(addToS);
+			if(!UnionList.contains(hash)){
+				UnionList.add(hash);
+			}
 		}
 		
 		System.out.println("T:");
@@ -84,6 +86,9 @@ public class HashCodeSimilarity {
 			Tuple addToT = new Tuple(hash, temp);
 			System.out.println("Hash: " + hash + ", String: " + temp);
 			T.add(addToT);
+			if(!UnionList.contains(hash)){
+				UnionList.add(hash);
+			}
 		}
 	}
 	
