@@ -86,8 +86,10 @@ public class HashTable {
      * @return the load factor
      */
     public float loadFactor() {
-    	printf(numElements() / size());
-        return (float) numElements() / size();
+  
+    	float temp = (float) (numElements() / maxSize);
+    	System.out.println("ne: " + numberOfElements + ", mS: " + maxSize + ", lf: " + temp);
+        return temp;
     }
 
     /**
@@ -98,13 +100,12 @@ public class HashTable {
      * prime integer whose value is at least twice the current size. Return type is void.
      * @param t the tuple to add
      */
-    public void add(Tuple t) {
-    	//TODO this doesn't allow multiples. 
+    public void add(Tuple t) { 
     	int hash = hFunction.hash(t.getKey());
     	System.out.println("Hash: " + hash);
+		this.numberOfElements++;
     	if(tupleTable[hash].get(0).getValue() == null){
     		tupleTable[hash].set(0, t);
-    		this.numberOfElements++;
     	}else{
     		tupleTable[hash].add(t);
     	}
@@ -115,11 +116,12 @@ public class HashTable {
     	 * the elements (tuples) to the new hash table. The size of the new hash table must be: Smallest
     	 * prime integer whose value is at least twice the current size. Return type is void.
     	*/
-    	if(loadFactor() > .7){
+    	if(loadFactor() >= (.7)){
+    		System.out.println("Refactor");
     		this.size = maxSize*2;
-    		int nextPrime = findNextPrime(maxSize*2);
+    		int nextPrime = findNextPrime(size);
     		refactor(nextPrime);
-    		hFunction = new HashFunction(nextPrime);
+    		/*hFunction = new HashFunction(nextPrime);
     		HashTable tempTable = new HashTable(nextPrime);
     		tempTable.hFunction = hFunction;
     		for(ArrayList<Tuple> al: tupleTable){
@@ -128,12 +130,12 @@ public class HashTable {
     			}
     		}
     		tupleTable = new ArrayList[nextPrime];
-    		tupleTable = tempTable.tupleTable.clone();
+    		tupleTable = tempTable.tupleTable.clone();*/
     	}
     }
 
-    private void refactor(int newS){
-    	ArrayList<Tuple> tempList = new ArrayList();
+    private void refactor(int newS) {
+    	ArrayList<Tuple> tempList = new ArrayList<Tuple>();
     	for(int i = 0; i < maxSize; i++){
     		tempList.addAll(search(i));
     	}
@@ -141,6 +143,7 @@ public class HashTable {
     	hFunction = new HashFunction(newS);
     	
     	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
+    	tupleTable = null;
     	tupleTable = new ArrayList[newS];
     	for(int i = 0; i < maxSize; i++){
     		if(tupleTable[i] == null){
@@ -148,6 +151,15 @@ public class HashTable {
     			tupleTable[i].add(new Tuple(i, null));
     		}
     	}
+    	this.numberOfElements = 0;
+    	for(Tuple t: tempList){
+    		if(t.getValue() == null){
+    			//do nothing
+    		}else{
+    			this.add(t);
+    		}
+    	}
+    	for(int j = 0; j < 100000; j++){}
     }
     /**
      * The list of Tuples in the hash table with a key equaling k

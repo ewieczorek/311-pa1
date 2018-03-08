@@ -23,7 +23,7 @@ public class mainClass {
 		//System.out.println("Similarity: " + newSCode2.similarity());
 		System.out.println("Done");
 		
-		HashCodeSimilarity newHCode = new HashCodeSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
+		/*HashCodeSimilarity newHCode = new HashCodeSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
 		//System.out.println(newHCode.lengthOfS1());
 		//System.out.println(newHCode.lengthOfS2());
 		//System.out.println("Similarity: " + newHCode.similarity());
@@ -32,7 +32,7 @@ public class mainClass {
 		//System.out.println(newHCode2.lengthOfS1());
 		//System.out.println(newHCode2.lengthOfS2());
 		//System.out.println("Similarity: " + newHCode2.similarity());
-		
+		*/
 		System.out.println("Done");
 	}
 }

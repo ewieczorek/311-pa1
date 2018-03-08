@@ -12,9 +12,13 @@ public class HashStringSimilarity {
 		this.s1 = s1;
 		this.s2 = s2;
 		this.sLength = sLength;	
-		S = new HashTable(sLength);
-		T = new HashTable(sLength);
-		UnionTable = new HashTable(sLength);
+		S = new HashTable(s1.length());
+		T = new HashTable(s2.length());
+		if(s1.length() > s2.length()){
+			UnionTable = new HashTable(s2.length());
+		}else{
+			UnionTable = new HashTable(s1.length());
+		}
 		populate();
 		System.out.println("Populated");
 	}

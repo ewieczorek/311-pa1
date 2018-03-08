@@ -21,7 +21,7 @@ public class Tuple {
 		if(Value != null){
 			return Value;
 		}else{
-			return "";
+			return null;
 		}
 	}
 	
