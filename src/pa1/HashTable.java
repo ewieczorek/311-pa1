@@ -15,7 +15,7 @@ public class HashTable {
     private int size;
     private int numberOfElements;
     private HashFunction hFunction; 
-    private ArrayList<Tuple>[] tupleTable; 
+    private ArrayList<Tuple>[] tupleTable = null; 
     //private Tuple[] tupleTable; 
     //TODO private LinkedList<Tuple>[] hashTable;
 
@@ -34,11 +34,15 @@ public class HashTable {
     	//creating the object new HashFunction(p)
     	hFunction = new HashFunction(this.maxSize);
     	
-    	//Instantiate tupleTable to the maxSize determined by the next prime number after size. 
-    	tupleTable = new ArrayList[maxSize];
+    	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
+    	if(tupleTable == null){
+    		tupleTable = new ArrayList[maxSize];
+    	}
     	for(int i = 0; i < maxSize; i++){
-    		tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
-    		tupleTable[i].add(new Tuple(i, null));
+    		if(tupleTable[i] == null){
+    			tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
+    			tupleTable[i].add(new Tuple(i, null));
+    		}
     	}
     }
 
@@ -82,24 +86,71 @@ public class HashTable {
      * @return the load factor
      */
     public float loadFactor() {
+    	printf(numElements() / size());
         return (float) numElements() / size();
     }
 
     /**
+     * Adds the tuple t to the hash table; places t in the list pointed by the cell hash(t.getKey()) 
+     * where hash is the hash function method from the class HashFunction. When the load factors becomes
+     * bigger than 0.7, then it (approximately) doubles the size of the hash table and rehashes all
+     * the elements (tuples) to the new hash table. The size of the new hash table must be: Smallest
+     * prime integer whose value is at least twice the current size. Return type is void.
      * @param t the tuple to add
      */
     public void add(Tuple t) {
     	//TODO this doesn't allow multiples. 
     	int hash = hFunction.hash(t.getKey());
+    	System.out.println("Hash: " + hash);
     	if(tupleTable[hash].get(0).getValue() == null){
     		tupleTable[hash].set(0, t);
+    		this.numberOfElements++;
     	}else{
     		tupleTable[hash].add(t);
     	}
+    	
+    	
+    	/*When the load factors becomes
+    	 * bigger than 0.7, then it (approximately) doubles the size of the hash table and rehashes all
+    	 * the elements (tuples) to the new hash table. The size of the new hash table must be: Smallest
+    	 * prime integer whose value is at least twice the current size. Return type is void.
+    	*/
+    	if(loadFactor() > .7){
+    		this.size = maxSize*2;
+    		int nextPrime = findNextPrime(maxSize*2);
+    		refactor(nextPrime);
+    		hFunction = new HashFunction(nextPrime);
+    		HashTable tempTable = new HashTable(nextPrime);
+    		tempTable.hFunction = hFunction;
+    		for(ArrayList<Tuple> al: tupleTable){
+    			for(Tuple tup: al){
+    				tempTable.add(tup);
+    			}
+    		}
+    		tupleTable = new ArrayList[nextPrime];
+    		tupleTable = tempTable.tupleTable.clone();
+    	}
     }
 
+    private void refactor(int newS){
+    	ArrayList<Tuple> tempList = new ArrayList();
+    	for(int i = 0; i < maxSize; i++){
+    		tempList.addAll(search(i));
+    	}
+    	this.maxSize = newS;
+    	hFunction = new HashFunction(newS);
+    	
+    	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
+    	tupleTable = new ArrayList[newS];
+    	for(int i = 0; i < maxSize; i++){
+    		if(tupleTable[i] == null){
+    			tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
+    			tupleTable[i].add(new Tuple(i, null));
+    		}
+    	}
+    }
     /**
-     * The list of Tuples in the hash table with a key equalling k
+     * The list of Tuples in the hash table with a key equaling k
      *
      * @param k the key to find
      * @return the list of tuples at whose key is equal to k
