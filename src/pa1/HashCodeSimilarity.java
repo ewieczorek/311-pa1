@@ -12,9 +12,15 @@ public class HashCodeSimilarity {
 		this.s1 = s1;
 		this.s2 = s2;
 		this.sLength = sLength;	
-		S = new HashTable(sLength);
-		T = new HashTable(sLength);
+		S = new HashTable(s1.length());
+		T = new HashTable(s2.length());
+		if(s1.length() > s2.length()){
+			UnionTable = new HashTable(s2.length());
+		}else{
+			UnionTable = new HashTable(s1.length());
+		}
 		populate();
+		System.out.println("Populated");
 	}
 	
 	public float lengthOfS1(){
@@ -52,6 +58,7 @@ public class HashCodeSimilarity {
 	}
 	
 	private void populate(){
+		System.out.println("S:");
 		for(int i = 0; i <= (this.s1.length() - this.sLength); i++){
 			String temp = s1.substring(i, i + this.sLength);
 			int power = temp.length() - 1;
@@ -65,6 +72,7 @@ public class HashCodeSimilarity {
 			S.add(addToS);
 		}
 		
+		System.out.println("T:");
 		for(int i = 0; i <= (this.s2.length() - this.sLength); i++){
 			String temp = s2.substring(i, i + this.sLength);
 			int power = temp.length() - 1;
@@ -77,7 +85,6 @@ public class HashCodeSimilarity {
 			System.out.println("Hash: " + hash + ", String: " + temp);
 			T.add(addToT);
 		}
-		return;
 	}
 	
 	public float similarity(){

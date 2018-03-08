@@ -87,8 +87,8 @@ public class HashTable {
      */
     public float loadFactor() {
   
-    	float temp = (float) (numElements() / maxSize);
-    	System.out.println("ne: " + numberOfElements + ", mS: " + maxSize + ", lf: " + temp);
+    	float temp = (float) ((float) numElements() / (float) maxSize);
+    	//System.out.println("ne: " + numberOfElements + ", mS: " + maxSize + ", lf: " + temp);
         return temp;
     }
 
@@ -102,7 +102,7 @@ public class HashTable {
      */
     public void add(Tuple t) { 
     	int hash = hFunction.hash(t.getKey());
-    	System.out.println("Hash: " + hash);
+    	//System.out.println("Hash: " + hash);
 		this.numberOfElements++;
     	if(tupleTable[hash].get(0).getValue() == null){
     		tupleTable[hash].set(0, t);
@@ -116,8 +116,8 @@ public class HashTable {
     	 * the elements (tuples) to the new hash table. The size of the new hash table must be: Smallest
     	 * prime integer whose value is at least twice the current size. Return type is void.
     	*/
+    	//System.out.println("Load factor: " + loadFactor());
     	if(loadFactor() >= (.7)){
-    		System.out.println("Refactor");
     		this.size = maxSize*2;
     		int nextPrime = findNextPrime(size);
     		refactor(nextPrime);
@@ -135,6 +135,7 @@ public class HashTable {
     }
 
     private void refactor(int newS) {
+    	System.out.println("Refactor");
     	ArrayList<Tuple> tempList = new ArrayList<Tuple>();
     	for(int i = 0; i < maxSize; i++){
     		tempList.addAll(search(i));
