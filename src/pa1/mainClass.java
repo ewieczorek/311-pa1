@@ -22,28 +22,28 @@ public class mainClass {
 		long endTime;
 		
 		System.out.println("Brute Force Similarity");
+		BruteForceSimilarity newBrute = new BruteForceSimilarity(string1, string2, 6);
+		//System.out.println("Length s1: " + newBrute.lengthOfS1());
+		//System.out.println("Length s2: " + newBrute.lengthOfS2());
 		startTime = System.currentTimeMillis();
-		BruteForceSimilarity newBrute = new BruteForceSimilarity(string1, string2, 7);
-		System.out.println("Length s1: " + newBrute.lengthOfS1());
-		System.out.println("Length s2: " + newBrute.lengthOfS2());
 		System.out.println("Similarity: " + newBrute.similarity());
 		endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
 		
 		System.out.println("Hash String Similarity");
+		HashStringSimilarity newSCode = new HashStringSimilarity(string1, string2, 6);
+		//System.out.println("Length s1: " + newSCode.lengthOfS1());
+		//System.out.println("Length s2: " + newSCode.lengthOfS2());
 		startTime = System.currentTimeMillis();
-		HashStringSimilarity newSCode = new HashStringSimilarity(string1, string2, 7);
-		System.out.println("Length s1: " + newSCode.lengthOfS1());
-		System.out.println("Length s2: " + newSCode.lengthOfS2());
 		System.out.println("Similarity: " + newSCode.similarity());
 		endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
 		
 		System.out.println("Hash Code Similarity");
+		HashCodeSimilarity newHCode = new HashCodeSimilarity(string1, string2, 6);
+		//System.out.println("Length s2: " + newHCode.lengthOfS1());
+		//System.out.println("Length s2: " + newHCode.lengthOfS2());
 		startTime = System.currentTimeMillis();
-		HashCodeSimilarity newHCode = new HashCodeSimilarity(string1, string2, 7);
-		System.out.println("Length s2: " + newHCode.lengthOfS1());
-		System.out.println("Length s2: " + newHCode.lengthOfS2());
 		System.out.println("Similarity: " + newHCode.similarity());
 		endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime) );

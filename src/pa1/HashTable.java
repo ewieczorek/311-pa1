@@ -122,16 +122,6 @@ public class HashTable {
     		int nextPrime = findNextPrime(size);
     		refactor(nextPrime);
     	}
-    		/*hFunction = new HashFunction(nextPrime);
-    		HashTable tempTable = new HashTable(nextPrime);
-    		tempTable.hFunction = hFunction;
-    		for(ArrayList<Tuple> al: tupleTable){
-    			for(Tuple tup: al){
-    				tempTable.add(tup);
-    			}
-    		}
-    		tupleTable = new ArrayList[nextPrime];
-    		tupleTable = tempTable.tupleTable.clone();*/
     }
 
     private void refactor(int newS) {
@@ -145,27 +135,9 @@ public class HashTable {
     				tempList.add(t);
     			}
     		}
-    		//tempList.addAll(tupleTable[i]);
     	}
-    	/*System.out.println("Before Refactor:");
-    	for(Tuple t: tempList){
-    		if(t.getValue() == null){
-    			
-    		}else{
-    		System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue() + ", Hash: " + hFunction.hash(t.getKey()));
-    		}
-    	}*/
     	this.maxSize = newS;
-    	hFunction = new HashFunction(newS);
-    	
-    	/*System.out.println("After Refactor:");
-    	for(Tuple t: tempList){
-    		if(t.getValue() == null){
-    			
-    		}else{
-    		System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue() + ", Hash: " + hFunction.hash(t.getKey()));
-    		}
-    	} */   	
+    	hFunction = new HashFunction(newS); 	
     	
     	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
     	tupleTable = null;
@@ -183,6 +155,8 @@ public class HashTable {
     		}
     	}
     }
+    
+    
     /**
      * The list of Tuples in the hash table with a key equaling k
      *
@@ -206,13 +180,11 @@ public class HashTable {
     public int search(Tuple t) {
     	int hash = hFunction.hash(t.getKey());
     	int numEqual = 0;
-    	//System.out.println("Looking for: " + t.getKey() + ", " + t.getValue());
     	for(Tuple hT: tupleTable[hash]){
     		if(t.equals(hT)){
     			numEqual++;
     		}
     	}
-    	//System.out.println("found: " + numEqual);
     	return numEqual;
     }
     

@@ -12,8 +12,8 @@ public class HashCodeSimilarity {
 		this.s1 = s1;
 		this.s2 = s2;
 		this.sLength = sLength;	
-		S = new HashTable(s1.length());
-		T = new HashTable(s2.length());
+		S = new HashTable(s1.length()/2);
+		T = new HashTable(s2.length()/2);
 		UnionTable = new HashTable(3);
 		populate();
 	}
@@ -22,9 +22,6 @@ public class HashCodeSimilarity {
 		//The total length we will be returning
 		float totalLength = 0;
 		for(ArrayList<Tuple> al: UnionTable.tupleTable){
-			//The temporary total after each row of union table
-			//ArrayList<Tuple> UnionList = new ArrayList<Tuple>();
-			//UnionList = UnionTable.tupleTable[i];
 			
 			//If the row is empty don't search it
 			if(al.get(0).getValue() == null && al.size() == 1){
@@ -55,9 +52,6 @@ public class HashCodeSimilarity {
 		//The total length we will be returning
 		float totalLength = 0;
 		for(ArrayList<Tuple> al: UnionTable.tupleTable){
-			//The temporary total after each row of union table
-			//ArrayList<Tuple> UnionList = new ArrayList<Tuple>();
-			//UnionList = UnionTable.tupleTable[i];
 			
 			//If the row is empty don't search it
 			if(al.get(0).getValue() == null && al.size() == 1){
@@ -65,7 +59,7 @@ public class HashCodeSimilarity {
 			}else{
 				//For each item in the current row on union table
 				for(Tuple uT: al){
-					int searchTotal = T.search(uT.getKey()).size(); 
+					int searchTotal = T.search(uT.getKey()).size();
 					
 					//After counting how many times one appears we then square it
 					float squared = (float) searchTotal * (float) searchTotal;
@@ -130,8 +124,8 @@ public class HashCodeSimilarity {
 			}else{
 				for(Tuple uSub: ul){
 					int sim1 = 0, sim2 = 0;
-					sim1 = S.search(uSub);
-					sim2 = T.search(uSub);
+					sim1 = S.search(uSub.getKey()).size();
+					sim2 = T.search(uSub.getKey()).size();
 					numerator += (float) (sim1 * sim2);
 				}
 			}

@@ -12,8 +12,8 @@ public class HashStringSimilarity {
 		this.s1 = s1;
 		this.s2 = s2;
 		this.sLength = sLength;	
-		S = new HashTable(s1.length());
-		T = new HashTable(s2.length());
+		S = new HashTable(s1.length()/2);
+		T = new HashTable(s2.length()/2);
 		UnionTable = new HashTable(3);
 		populate();
 	}
@@ -22,9 +22,6 @@ public class HashStringSimilarity {
 		//The total length we will be returning
 		float totalLength = 0;
 		for(ArrayList<Tuple> al: UnionTable.tupleTable){
-			//The temporary total after each row of union table
-			//ArrayList<Tuple> UnionList = new ArrayList<Tuple>();
-			//UnionList = UnionTable.tupleTable[i];
 			
 			//If the row is empty don't search it
 			if(al.get(0).getValue() == null && al.size() == 1){
@@ -55,9 +52,6 @@ public class HashStringSimilarity {
 		//The total length we will be returning
 		float totalLength = 0;
 		for(ArrayList<Tuple> al: UnionTable.tupleTable){
-			//The temporary total after each row of union table
-			//ArrayList<Tuple> UnionList = new ArrayList<Tuple>();
-			//UnionList = UnionTable.tupleTable[i];
 			
 			//If the row is empty don't search it
 			if(al.get(0).getValue() == null && al.size() == 1){
