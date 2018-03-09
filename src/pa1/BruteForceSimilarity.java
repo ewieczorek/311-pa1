@@ -1,5 +1,10 @@
 package pa1;
 
+/*
+ * @author Ethan Wieczorek
+ * @author Michael Scholl
+ * @author Dalton Sherratt
+ */
 import java.util.ArrayList;
 
 public class BruteForceSimilarity {

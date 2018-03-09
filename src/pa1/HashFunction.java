@@ -1,5 +1,9 @@
 package pa1;
-
+/*
+ * @author Ethan Wieczorek
+ * @author Michael Scholl
+ * @author Dalton Sherratt
+ */
 /**
  * Implements a random hash function of
  * the form (ax+b)%p.

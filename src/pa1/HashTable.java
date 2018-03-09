@@ -3,11 +3,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
+/*
  * @author Ethan Wieczorek
  * @author Michael Scholl
- *
- * Hashtable class to implement a hash table holding tuples
+ * @author Dalton Sherratt
  */
 public class HashTable {
 
@@ -32,12 +31,13 @@ public class HashTable {
     	this.maxSize = findNextPrime(size);
     	
     	//creating the object new HashFunction(p)
-    	hFunction = new HashFunction(this.maxSize);
+    	this.hFunction = new HashFunction(this.maxSize);
     	
     	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
     	if(tupleTable == null){
-    		tupleTable = new ArrayList[maxSize];
+    		this.tupleTable = new ArrayList[maxSize];
     	}
+    	//Instantiate each row of the table with a null value
     	for(int i = 0; i < maxSize; i++){
     		if(tupleTable[i] == null){
     			tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
@@ -61,7 +61,7 @@ public class HashTable {
      */
     public float averageLoad() {
     	//number of distinct elements in hash table divided by the size, with nulls ignored.  
-        float average = maxSize / 2;
+    	float average = numElements() / maxSize;
         return average;
     }
 
@@ -118,14 +118,12 @@ public class HashTable {
     	*/
     	//System.out.println("Load factor: " + loadFactor());
     	if(loadFactor() >= (.7)){
-    		this.size = maxSize*2;
-    		int nextPrime = findNextPrime(size);
-    		refactor(nextPrime);
+    		refactor();
     	}
     }
 
-    private void refactor(int newS) {
-    	//System.out.println("Refactor");
+    private void refactor() {
+    	//System.out.println("Refactoring");
     	ArrayList<Tuple> tempList = new ArrayList<Tuple>();
     	for(int i = 0; i < maxSize; i++){
     		for(Tuple t: tupleTable[i]){
@@ -136,22 +134,24 @@ public class HashTable {
     			}
     		}
     	}
-    	this.maxSize = newS;
-    	hFunction = new HashFunction(newS); 	
-    	
+		this.size = maxSize*2;
+		int nextPrime = findNextPrime(this.size);
+    	this.maxSize = nextPrime;
+    	this.hFunction = new HashFunction(nextPrime); 	
+ 
     	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
     	tupleTable = null;
-    	tupleTable = new ArrayList[newS];
+    	tupleTable = new ArrayList[nextPrime];
     	for(int i = 0; i < maxSize; i++){
 			tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
 			tupleTable[i].add(new Tuple(i, null));
     	}
     	this.numberOfElements = 0;
-    	for(Tuple t: tempList){
-    		if(t.getValue() == null){
+    	for(Tuple tt: tempList){
+    		if(tt.getValue() == null){
     			//do nothing
     		}else{
-    			this.add(t);
+    			this.add(tt);
     		}
     	}
     }

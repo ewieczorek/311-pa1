@@ -1,5 +1,9 @@
 package pa1;
-
+/*
+ * @author Ethan Wieczorek
+ * @author Michael Scholl
+ * @author Dalton Sherratt
+ */
 public class Tuple {
 	private int Key;
 	private String Value;

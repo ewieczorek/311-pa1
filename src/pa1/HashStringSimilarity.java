@@ -1,5 +1,9 @@
 package pa1;
-
+/*
+ * @author Ethan Wieczorek
+ * @author Michael Scholl
+ * @author Dalton Sherratt
+ */
 import java.util.ArrayList;
 
 public class HashStringSimilarity {
@@ -12,9 +16,14 @@ public class HashStringSimilarity {
 		this.s1 = s1;
 		this.s2 = s2;
 		this.sLength = sLength;	
-		S = new HashTable(s1.length()/2);
-		T = new HashTable(s2.length()/2);
-		UnionTable = new HashTable(3);
+		S = new HashTable(s1.length());
+		T = new HashTable(s2.length());
+		if(s1.length() > s2.length()){
+			UnionTable = new HashTable(s1.length()/2);
+		}else{
+			UnionTable = new HashTable(s2.length()/2);
+		}
+		
 		populate();
 	}
 	

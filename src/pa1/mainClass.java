@@ -1,5 +1,9 @@
 package pa1;
-
+/*
+ * @author Ethan Wieczorek
+ * @author Michael Scholl
+ * @author Dalton Sherratt
+ */
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -16,33 +20,34 @@ public class mainClass {
 		
 		System.out.println(string1);
 		System.out.println(string2);
-
 		
 		long startTime;
 		long endTime;
 		
 		System.out.println("Brute Force Similarity");
-		BruteForceSimilarity newBrute = new BruteForceSimilarity(string1, string2, 6);
-		//System.out.println("Length s1: " + newBrute.lengthOfS1());
-		//System.out.println("Length s2: " + newBrute.lengthOfS2());
+		BruteForceSimilarity newBrute = new BruteForceSimilarity(string1, string2, 8);
+		System.out.println("Length s1: " + newBrute.lengthOfS1());
+		System.out.println("Length s2: " + newBrute.lengthOfS2());
 		startTime = System.currentTimeMillis();
 		System.out.println("Similarity: " + newBrute.similarity());
 		endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
 		
 		System.out.println("Hash String Similarity");
-		HashStringSimilarity newSCode = new HashStringSimilarity(string1, string2, 6);
-		//System.out.println("Length s1: " + newSCode.lengthOfS1());
-		//System.out.println("Length s2: " + newSCode.lengthOfS2());
+		HashStringSimilarity newSCode = new HashStringSimilarity(string1, string2, 8);
+		//System.out.println("Populated");
+		System.out.println("Length s1: " + newSCode.lengthOfS1());
+		System.out.println("Length s2: " + newSCode.lengthOfS2());
+		//newSCode.printAll();
 		startTime = System.currentTimeMillis();
 		System.out.println("Similarity: " + newSCode.similarity());
 		endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
 		
 		System.out.println("Hash Code Similarity");
-		HashCodeSimilarity newHCode = new HashCodeSimilarity(string1, string2, 6);
-		//System.out.println("Length s2: " + newHCode.lengthOfS1());
-		//System.out.println("Length s2: " + newHCode.lengthOfS2());
+		HashCodeSimilarity newHCode = new HashCodeSimilarity(string1, string2, 8);
+		System.out.println("Length s2: " + newHCode.lengthOfS1());
+		System.out.println("Length s2: " + newHCode.lengthOfS2());
 		startTime = System.currentTimeMillis();
 		System.out.println("Similarity: " + newHCode.similarity());
 		endTime = System.currentTimeMillis();
