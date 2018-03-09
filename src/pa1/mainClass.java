@@ -30,6 +30,7 @@ public class mainClass {
 		endTime = System.currentTimeMillis();
 		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
 		
+<<<<<<< HEAD
 		System.out.println("Hash String Similarity");
 		startTime = System.currentTimeMillis();
 		HashStringSimilarity newSCode = new HashStringSimilarity(string1, string2, 7);
@@ -50,6 +51,10 @@ public class mainClass {
 		
 		/*
 		System.out.println("Brute Force Similarity");
+=======
+		System.out.println("hallo");
+		
+>>>>>>> 2cacbfb465da1e0301d16a621def1c9703f1b800
 		BruteForceSimilarity newBrute = new BruteForceSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
 		System.out.println("Length s1: " + newBrute.lengthOfS1());
 		System.out.println("Length s2: " + newBrute.lengthOfS2());
