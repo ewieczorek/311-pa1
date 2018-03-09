@@ -15,7 +15,7 @@ public class HashTable {
     private int size;
     private int numberOfElements;
     private HashFunction hFunction; 
-    private ArrayList<Tuple>[] tupleTable = null; 
+    public ArrayList<Tuple>[] tupleTable = null; 
     //private Tuple[] tupleTable; 
     //TODO private LinkedList<Tuple>[] hashTable;
 
@@ -121,6 +121,7 @@ public class HashTable {
     		this.size = maxSize*2;
     		int nextPrime = findNextPrime(size);
     		refactor(nextPrime);
+    	}
     		/*hFunction = new HashFunction(nextPrime);
     		HashTable tempTable = new HashTable(nextPrime);
     		tempTable.hFunction = hFunction;
@@ -131,26 +132,47 @@ public class HashTable {
     		}
     		tupleTable = new ArrayList[nextPrime];
     		tupleTable = tempTable.tupleTable.clone();*/
-    	}
     }
 
     private void refactor(int newS) {
-    	System.out.println("Refactor");
+    	//System.out.println("Refactor");
     	ArrayList<Tuple> tempList = new ArrayList<Tuple>();
     	for(int i = 0; i < maxSize; i++){
-    		tempList.addAll(search(i));
+    		for(Tuple t: tupleTable[i]){
+    			if(t.getValue() == null){
+    				//do nothing    	
+    			}else{
+    				tempList.add(t);
+    			}
+    		}
+    		//tempList.addAll(tupleTable[i]);
     	}
+    	/*System.out.println("Before Refactor:");
+    	for(Tuple t: tempList){
+    		if(t.getValue() == null){
+    			
+    		}else{
+    		System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue() + ", Hash: " + hFunction.hash(t.getKey()));
+    		}
+    	}*/
     	this.maxSize = newS;
     	hFunction = new HashFunction(newS);
+    	
+    	/*System.out.println("After Refactor:");
+    	for(Tuple t: tempList){
+    		if(t.getValue() == null){
+    			
+    		}else{
+    		System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue() + ", Hash: " + hFunction.hash(t.getKey()));
+    		}
+    	} */   	
     	
     	//Instantiate tupleTable to the maxSize determined by the next prime number after size.
     	tupleTable = null;
     	tupleTable = new ArrayList[newS];
     	for(int i = 0; i < maxSize; i++){
-    		if(tupleTable[i] == null){
-    			tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
-    			tupleTable[i].add(new Tuple(i, null));
-    		}
+			tupleTable[i] = new ArrayList<Tuple>(); //create each cell initially as null;
+			tupleTable[i].add(new Tuple(i, null));
     	}
     	this.numberOfElements = 0;
     	for(Tuple t: tempList){
@@ -160,7 +182,6 @@ public class HashTable {
     			this.add(t);
     		}
     	}
-    	for(int j = 0; j < 100000; j++){}
     }
     /**
      * The list of Tuples in the hash table with a key equaling k
@@ -170,12 +191,29 @@ public class HashTable {
      */
     public ArrayList<Tuple> search(int k) {
     	int hash = hFunction.hash(k);
-    	return tupleTable[hash];
+    	ArrayList<Tuple> equalToK = new ArrayList<Tuple>();
+    	for(Tuple t: tupleTable[hash]){
+    		if(t.getKey() == k){
+    			equalToK.add(t);
+    		}
+    	}
+    	return equalToK;
     }
 
+    /*
+     * Returns the number of tuples equal to t
+     */
     public int search(Tuple t) {
     	int hash = hFunction.hash(t.getKey());
-    	return tupleTable[hash].size();
+    	int numEqual = 0;
+    	//System.out.println("Looking for: " + t.getKey() + ", " + t.getValue());
+    	for(Tuple hT: tupleTable[hash]){
+    		if(t.equals(hT)){
+    			numEqual++;
+    		}
+    	}
+    	//System.out.println("found: " + numEqual);
+    	return numEqual;
     }
     
     /**

@@ -16,38 +16,74 @@ public class mainClass {
 		
 		System.out.println(string1);
 		System.out.println(string2);
+
 		
+		long startTime;
+		long endTime;
+		
+		System.out.println("Brute Force Similarity");
+		startTime = System.currentTimeMillis();
+		BruteForceSimilarity newBrute = new BruteForceSimilarity(string1, string2, 7);
+		System.out.println("Length s1: " + newBrute.lengthOfS1());
+		System.out.println("Length s2: " + newBrute.lengthOfS2());
+		System.out.println("Similarity: " + newBrute.similarity());
+		endTime = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
+		
+		System.out.println("Hash String Similarity");
+		startTime = System.currentTimeMillis();
+		HashStringSimilarity newSCode = new HashStringSimilarity(string1, string2, 7);
+		System.out.println("Length s1: " + newSCode.lengthOfS1());
+		System.out.println("Length s2: " + newSCode.lengthOfS2());
+		System.out.println("Similarity: " + newSCode.similarity());
+		endTime = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (endTime - startTime) + "\n\n");
+		
+		System.out.println("Hash Code Similarity");
+		startTime = System.currentTimeMillis();
+		HashCodeSimilarity newHCode = new HashCodeSimilarity(string1, string2, 7);
+		System.out.println("Length s2: " + newHCode.lengthOfS1());
+		System.out.println("Length s2: " + newHCode.lengthOfS2());
+		System.out.println("Similarity: " + newHCode.similarity());
+		endTime = System.currentTimeMillis();
+		System.out.println("Total execution time: " + (endTime - startTime) );
+		
+		/*
+		System.out.println("Brute Force Similarity");
 		BruteForceSimilarity newBrute = new BruteForceSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
-		System.out.println(newBrute.lengthOfS1());
-		System.out.println(newBrute.lengthOfS2());
+		System.out.println("Length s1: " + newBrute.lengthOfS1());
+		System.out.println("Length s2: " + newBrute.lengthOfS2());
 		System.out.println("Similarity: " + newBrute.similarity());
 		
 		BruteForceSimilarity newBrute2 = new BruteForceSimilarity("1268264612", "251188438", 1);
-		System.out.println(newBrute2.lengthOfS1());
-		System.out.println(newBrute2.lengthOfS2());
-		System.out.println("Similarity: " + newBrute2.similarity());
+		System.out.println("Length s1: " + newBrute2.lengthOfS1());
+		System.out.println("Length s2: " + newBrute2.lengthOfS2());
+		System.out.println("Similarity: " + newBrute2.similarity() + "\n");
 		
+		System.out.println("Hash String Similarity");
 		HashStringSimilarity newSCode = new HashStringSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
-		//System.out.println(newSCode.lengthOfS1());
-		//System.out.println(newSCode.lengthOfS2());
-		//System.out.println("Similarity: " + newSCode.similarity());
+		//newSCode.printAll();
+		System.out.println("Length s1: " + newSCode.lengthOfS1());
+		System.out.println("Length s2: " + newSCode.lengthOfS2());
+		System.out.println("Similarity: " + newSCode.similarity());
 		
 		HashStringSimilarity newSCode2 = new HashStringSimilarity("1268264612", "251188438", 1);
-		//System.out.println(newSCode2.lengthOfS1());
-		//System.out.println(newSCode2.lengthOfS2());
-		//System.out.println("Similarity: " + newSCode2.similarity());
+		//newSCode2.printAll();
+		System.out.println("Length s1: " + newSCode2.lengthOfS1());
+		System.out.println("Length s2: " + newSCode2.lengthOfS2());
+		System.out.println("Similarity: " + newSCode2.similarity() + "\n");
 		
+		System.out.println("Hash Code Similarity");
 		HashCodeSimilarity newHCode = new HashCodeSimilarity("aroseisaroseisarose", "aroseisaflowerwhichisarose", 4);
-		//System.out.println(newHCode.lengthOfS1());
-		//System.out.println(newHCode.lengthOfS2());
-		//System.out.println("Similarity: " + newHCode.similarity());
+		System.out.println("Length s2: " + newHCode.lengthOfS1());
+		System.out.println("Length s2: " + newHCode.lengthOfS2());
+		System.out.println("Similarity: " + newHCode.similarity());
 		
 		HashCodeSimilarity newHCode2 = new HashCodeSimilarity("1268264612", "251188438", 1);
-		//System.out.println(newHCode2.lengthOfS1());
-		//System.out.println(newHCode2.lengthOfS2());
-		//System.out.println("Similarity: " + newHCode2.similarity());
-		
-		System.out.println("Done");
+		System.out.println("Length s2: " + newHCode2.lengthOfS1());
+		System.out.println("Length s2: " + newHCode2.lengthOfS2());
+		System.out.println("Similarity: " + newHCode2.similarity());
+		*/
 	}
 	
 	public static String readFile(File file) {
@@ -74,10 +110,6 @@ public class mainClass {
 					if (65 <= value && value <= 90) {
 						string += Character.toLowerCase(c);
 					}
-					else {
-						// doing nuthin
-					}
-						
 				}
 				
 			}

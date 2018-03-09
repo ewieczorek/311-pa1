@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class HashStringSimilarity {
 	String s1, s2;
 	int sLength;
-	ArrayList<Tuple> UnionList;
+	//ArrayList<Tuple> UnionList;
 	HashTable S, T, UnionTable;
 	
 	HashStringSimilarity(String s1, String s2, int sLength){
@@ -14,51 +14,78 @@ public class HashStringSimilarity {
 		this.sLength = sLength;	
 		S = new HashTable(s1.length());
 		T = new HashTable(s2.length());
-		if(s1.length() > s2.length()){
-			UnionTable = new HashTable(s2.length());
-		}else{
-			UnionTable = new HashTable(s1.length());
-		}
+		UnionTable = new HashTable(3);
 		populate();
-		System.out.println("Populated");
 	}
 	
 	public float lengthOfS1(){
-	/*	float tempTotal = 0;
-		float toReturn = 0;
-		for(Tuple sub1: UnionList){
-			float tempToSquare = 0;
-			for(Tuple sub2: S){
-				if(sub1.equals(sub2)){
-					tempToSquare++;
+		//The total length we will be returning
+		float totalLength = 0;
+		for(ArrayList<Tuple> al: UnionTable.tupleTable){
+			//The temporary total after each row of union table
+			//ArrayList<Tuple> UnionList = new ArrayList<Tuple>();
+			//UnionList = UnionTable.tupleTable[i];
+			
+			//If the row is empty don't search it
+			if(al.get(0).getValue() == null && al.size() == 1){
+				//do nothing
+			}else{
+				//For each item in the current row on union table
+				for(Tuple uT: al){
+					int searchTotal = S.search(uT); 
+					
+					//After counting how many times one appears we then square it
+					float squared = (float) searchTotal * (float) searchTotal;
+					//System.out.println("Old total: " + totalLength + " + " + squared);
+					totalLength += squared;
+					//System.out.println("New total: " + totalLength);
 				}
 			}
-			tempTotal += (float) tempToSquare * tempToSquare;
+
 		}
-		toReturn = (float) Math.sqrt(tempTotal);
-		return toReturn;*/
-		return 0;
+		//System.out.println("vector length 1 before square: " + totalLength);
+		float sqrtValue = 0;
+		//The square root of the vector length a^2 + b^2 + c^2 etc.
+		sqrtValue = (float) Math.sqrt(totalLength);
+		
+		return sqrtValue;
 	}
 	
 	public float lengthOfS2(){
-	/*	float tempTotal = 0;
-		float toReturn = 0;
-		for(String sub1: UnionList){
-			float tempToSquare = 0;
-			for(String sub2: T){
-				if(sub1.equals(sub2)){
-					tempToSquare++;
+		//The total length we will be returning
+		float totalLength = 0;
+		for(ArrayList<Tuple> al: UnionTable.tupleTable){
+			//The temporary total after each row of union table
+			//ArrayList<Tuple> UnionList = new ArrayList<Tuple>();
+			//UnionList = UnionTable.tupleTable[i];
+			
+			//If the row is empty don't search it
+			if(al.get(0).getValue() == null && al.size() == 1){
+				//do nothing
+			}else{
+				//For each item in the current row on union table
+				for(Tuple uT: al){
+					int searchTotal = T.search(uT); 
+					
+					//After counting how many times one appears we then square it
+					float squared = (float) searchTotal * (float) searchTotal;
+					//System.out.println("Old total: " + totalLength + " + " + squared);
+					totalLength += squared;
+					//System.out.println("New total: " + totalLength);
 				}
 			}
-			tempTotal += (float) tempToSquare * tempToSquare;
+
 		}
-		toReturn = (float) Math.sqrt(tempTotal);
-		return toReturn;*/
-		return 0;
+		//System.out.println("vector length 1 before square: " + totalLength);
+		float sqrtValue = 0;
+		//The square root of the vector length a^2 + b^2 + c^2 etc.
+		sqrtValue = (float) Math.sqrt(totalLength);
+		
+		return sqrtValue;
 	}
 	
 	private void populate(){
-		System.out.println("S:");
+		//System.out.println("S:");
 		for(int i = 0; i <= (this.s1.length() - this.sLength); i++){
 			String temp = s1.substring(i, i + this.sLength);
 			int power = temp.length() - 1;
@@ -68,11 +95,15 @@ public class HashStringSimilarity {
 				power--;
 			}
 			Tuple addToS = new Tuple(hash, temp);
-			System.out.println("Hash: " + hash + ", String: " + temp);
+			//System.out.println("Hash: " + hash + ", String: " + temp);
 			S.add(addToS);
+			//if it doesn't exist in the union table, add it.
+			if(UnionTable.search(addToS) == 0){
+				UnionTable.add(addToS);
+			}
 		}
 		
-		System.out.println("T:");
+		//System.out.println("T:");
 		for(int i = 0; i <= (this.s2.length() - this.sLength); i++){
 			String temp = s2.substring(i, i + this.sLength);
 			int power = temp.length() - 1;
@@ -82,29 +113,52 @@ public class HashStringSimilarity {
 				power--;
 			}
 			Tuple addToT = new Tuple(hash, temp);
-			System.out.println("Hash: " + hash + ", String: " + temp);
+			//System.out.println("Hash: " + hash + ", String: " + temp);
 			T.add(addToT);
+			if(UnionTable.search(addToT) == 0){
+				UnionTable.add(addToT);
+			}
 		}
 	}
 	
 	public float similarity(){
 		float numerator = 0;
-		for(Tuple uSub: UnionList){
-			int sim1 = 0, sim2 = 0;
-		/*	for(String sSub: S){
-				if(uSub.equals(sSub)){
-					sim1++;
+		//For each arrayList in the union table
+		for(ArrayList<Tuple> ul: UnionTable.tupleTable){
+			if(ul.get(0).getValue() == null){
+				//do nothing if the row is empty
+			}else{
+				for(Tuple uSub: ul){
+					int sim1 = 0, sim2 = 0;
+					sim1 = S.search(uSub);
+					sim2 = T.search(uSub);
+					numerator += (float) (sim1 * sim2);
 				}
 			}
-			for(String tSub: T){
-				if(uSub.equals(tSub)){
-					sim2++;
-				}				
-			}*/
-			numerator += (float) (sim1 * sim2);
 		}
 		float toReturn = (float) (numerator / (lengthOfS1()* lengthOfS2()));
 		return toReturn;
 	}
 	
+	public void printAll(){
+		System.out.println("S:");
+		for(ArrayList<Tuple> al: S.tupleTable){
+			for(Tuple t: al){
+				System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue());
+			}
+		}
+		System.out.println("T:");
+		for(ArrayList<Tuple> al: T.tupleTable){
+			for(Tuple t: al){
+				System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue());
+			}
+		}
+		System.out.println("Union:");
+		for(ArrayList<Tuple> al: UnionTable.tupleTable){
+			for(Tuple t: al){
+				System.out.println("Key: " + t.getKey() + ", Value: " + t.getValue());
+			}
+		}
+		
+	}
 }

@@ -35,13 +35,17 @@ public class BruteForceSimilarity {
 	public float lengthOfS1(){
 		float tempTotal = 0;
 		float toReturn = 0;
+		//For each string in the union list
 		for(String sub1: UnionList){
 			float tempToSquare = 0;
+			//for each string in the S list
 			for(String sub2: S){
+				//If the strings are equal add one to the length
 				if(sub1.equals(sub2)){
 					tempToSquare++;
 				}
 			}
+			//Square the length of all equal strings
 			tempTotal += (float) tempToSquare * tempToSquare;
 		}
 		toReturn = (float) Math.sqrt(tempTotal);
